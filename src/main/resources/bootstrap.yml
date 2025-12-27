@@ -1,0 +1,11 @@
+## ===================================================================
+## Spring Cloud Config bootstrap configuration
+## ===================================================================
+spring:
+  application:
+    name: chatai
+  profiles:
+    active: '@activatedProfile@'
+
+  banner:
+    location: static/banner.txt

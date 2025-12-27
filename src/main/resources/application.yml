@@ -1,0 +1,124 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overwritten by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+#
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+spring:
+  # ===================================================================
+  # General configuration
+  # ===================================================================
+  main:
+    allow-bean-definition-overriding: true
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  jackson:
+    serialization:
+      indent-output: true
+    default-property-inclusion: non_null
+  # ===================================================================
+  # Multipart configuration
+  # ===================================================================
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  # ===================================================================
+  # Cloud Stream configuration
+  # ===================================================================
+  #  cloud:
+  #    stream:
+  #      bindings:
+  #        emailFired:
+  #          destination: email-fired-queue
+  #          group: email-fired-group
+  # ===================================================================
+  # Database configuration
+  # ===================================================================
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        formatSql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  # ===================================================================
+  # Logging and Tracing configuration
+  # ===================================================================
+#  zipkin:
+#    enabled: true
+#    base-url: http://127.0.0.1:9411/
+#    sender:
+#      type: web
+#  sleuth:
+#    sampler:
+#      probability: 0.2
+
+logging:
+  file:
+    path: ./logs
+    name: ${logging.file.path}/chatai.log
+  level:
+    root: WARN
+    org.springframework.web: ERROR
+    fr.fgroup: INFO
+    org.hibernate: ERROR
+    fr.fgroup.chatai.filters: WARN
+  pattern:
+    console: "%highlight(%d{ISO8601}) %highlight(%-5level) [%blue(${spring.application.name}, %X{X-B3-TraceId:-}, %X{X-B3-SpanId:-})] %yellow(%C{1.}): %msg%n%throwable"
+    file: "%highlight(%d{ISO8601}) %highlight(%-5level) [%blue(${spring.application.name}, %X{X-B3-TraceId:-}, %X{X-B3-SpanId:-})] %yellow(%C{1.}): %msg%n%throwable"
+# ===================================================================
+# App instance configuration
+# ===================================================================
+server:
+  port: 8081
+# ===================================================================
+# Discovery configuration (Eureka)
+# ===================================================================
+#eureka:
+#  client:
+#    registry-fetch-interval-seconds: 10
+#    instance-info-replication-interval-seconds: 10
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
+#  instance:
+#    prefer-ip-address: true
+# ===================================================================
+# Logging and Tracing
+# ===================================================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# ===================================================================
+# Storage configuration
+# ===================================================================
+storage:
+  basePath: /opt/chatgt/backend/upload
+  filePath: ${storage.servicePath}/{employeeIdKey}
+
+openai:
+  url: https://api.openai.com/v1
+  api-key: ${OPENAI_API_KEY:}
+
+
+encryption:
+  key: ${APP_ENCRYPTION_KEY:}

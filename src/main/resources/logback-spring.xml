@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+  <property name="LOG_TEMP" value="./logs"/>
+  <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- rollover daily and when the file reaches 5 MegaBytes -->
+      <fileNamePattern>./logs/archived/chatai_%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+  </appender>
+
+  <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+  <root level="INFO">
+    <appender-ref ref="LOGSTASH"/>
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>

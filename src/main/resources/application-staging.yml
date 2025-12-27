@@ -1,0 +1,36 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+spring:
+  # ===================================================================
+  # Database configuration
+  # ===================================================================
+  datasource:
+    url: ${STAGING_DB_URL:jdbc:postgresql://localhost:5432/db_chatai}
+    username: ${STAGING_DB_USERNAME:}
+    password: ${STAGING_DB_PASSWORD:}
+  # ===================================================================
+  # RabbitMQ configuration
+  # ===================================================================
+#  rabbitmq:
+#    host: 10.4.2.214
+#    port: 5672
+#    username: 
+#    password: 
+  # ===================================================================
+  # Logging and Tracing configuration
+  # ===================================================================
+#  zipkin:
+#    base-url: http://10.4.2.214:9411/
+# ===================================================================
+# App instance configuration
+# ===================================================================
+server:
+  port: 8083
